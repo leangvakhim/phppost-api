@@ -1,6 +1,6 @@
 <?php
-// $host = "localhost";
-$host = "https://api.aimostore.shop/";
+$host = "localhost";
+// $host = "https://api.aimostore.shop/";
 // $username = "root";
 $username = "laraveluser";
 // $password = "";
