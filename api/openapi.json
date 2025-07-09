@@ -1,0 +1,354 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "PHP Post API",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost/phppost/api",
+      "description": "PHP API"
+    }
+  ],
+  "paths": {
+    "/post.php": {
+      "get": {
+        "tags": ["Get Post"],
+        "summary": "Get all posts or a specific post by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "ID of the post to fetch",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Create or Update Post"],
+        "summary": "Create or update a post",
+        "description": "Creates a new post if no `id` is provided; updates an existing post if `id` is provided in the query.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "ID of the post to update (optional)",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "content": {
+                    "type": "string"
+                  },
+                  "image": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": ["title", "content", "image"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Post created or updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Toggle Post Status"],
+        "summary": "Toggle a post's active status (soft delete/restore)",
+        "description": "If the post is active (1), set it to inactive (0). If it's inactive, set it back to active.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "ID of the post to toggle",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Post toggled successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user.php": {
+      "get": {
+        "tags": ["Get User"],
+        "summary": "Get all users or a specific user by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "ID of the user to fetch",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Create or Update User"],
+        "summary": "Create or update a user",
+        "description": "Creates a user if no `id` is provided. Updates the user if `id` is provided in the query.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "ID of the user to update (optional)",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "role": {
+                    "type": "string"
+                  }
+                },
+                "required": ["username", "role"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User created or updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Toggle User Status"],
+        "summary": "Toggle a user's active status (soft delete/restore)",
+        "description": "If the user is active (1), set it to inactive (0). If it's inactive, set it back to active.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "ID of the user to toggle",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User toggled successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user.php?login": {
+      "post": {
+        "tags": ["User Login"],
+        "summary": "Login with username and password",
+        "description": "Authenticate a user and return basic user information if credentials are valid.  \n\nCreater's role (Non-Eligible for user) with username: creator && password: creator123  \n\nGuest's role (Non-Eligible for user) with username: guest && password: guest123",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                },
+                "required": ["username", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "type": "object"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user.php?logout" : {
+      "post": {
+        "tags": ["User Logout"],
+        "summary": "Logout user",
+        "description": "Logs out the user by clearing the JWT cookie.",
+        "responses": {
+          "200": {
+            "description": "Logout successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Get Post",
+      "description": "Operations to get posts"
+    },
+    {
+      "name": "Create or Update Post",
+      "description": "Create new or update existing posts"
+    },
+    {
+      "name": "Toggle Post Status",
+      "description": "Soft delete or restore a post by toggling the active column"
+    },
+    {
+      "name": "Get User",
+      "description": "Operations to get users"
+    },
+    {
+      "name": "Create or Update User",
+      "description": "Create new users or update existing ones depending on query parameter"
+    },
+    {
+      "name": "Toggle User Status",
+      "description": "Soft delete or restore a user by toggling the active column"
+    },
+    {
+      "name": "User Login",
+      "description": "Authenticate user credentials"
+    },
+    {
+      "name": "User Logout",
+      "description": "Clears the authentication token cookie to log the user out"
+    }
+  ]
+}
