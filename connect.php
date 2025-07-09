@@ -8,12 +8,12 @@ $password = "QAZqazWSXwsx12()";
 $dbname = "phppost";
 
 // header("Access-Control-Allow-Origin: http://localhost/phppost/swagger/");
-header("Access-Control-Allow-Origin: https://api.aimostore.shop/phppost/swagger/");
+header("Access-Control-Allow-Origin: https://api.aimostore.shop/php/phppost/swagger");
 header("Content-Type: application/json; charset=UTF-8");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requeted-With");
 
-$allowedOrigin = "https://api.aimostore.shop/phppost/swagger/";
+$allowedOrigin = "https://api.aimostore.shop/php/phppost/swagger";
 // $allowedOrigin = "http://localhost/phppost/swagger/";
 $origin = $_SERVER['HTTP_REFERER'];
 
