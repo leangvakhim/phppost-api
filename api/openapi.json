@@ -6,7 +6,7 @@
   },
   "servers": [
     {
-      "url": "https://api.aimostore.shop/php/phppost/api/openapi.json",
+      "url": "https://api.aimostore.shop/php/phppost/api",
       "description": "PHP API"
     }
   ],
